@@ -22,6 +22,25 @@ class DNS(BaseCommand):
                 'suspicious': sus_dns,
                 'recommendation': recommendation}
 
+
+    def __time_to_seconds(self, item):
+            ttl = item['ttl']
+            total_seconds = 0
+            _ = ttl
+            if 'd' in _:
+                days, _ = _.split('d')
+                total_seconds += int(days) * 86400 
+            if 'h' in _:
+                hours, _ = _.split('h')
+                total_seconds +=  int(hours) * 3600
+            if 'm' in _:
+                minutes, _ = _.split('m')
+                total_seconds +=  int(minutes) * 60
+            if 's' in _:
+                seconds, _ = _.split('s')
+                total_seconds +=  int(seconds)
+            return total_seconds
+        
     def check_results_ssh(self, res, enabled):
         sus_dns = []
         recommendation = []
